@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+	<ChannelList channel_name="channel1">
+		<Local local_name="RUS_TB">
+			<version addr="http://127.0.0.1/GX/"/>
+			<update addr="http://127.0.0.1/GX/"/>
+			<guidepage addr="http://127.0.0.1//index.html"/>
+			<homepage addr="http://127.0.0.1//index.html"/>
+			<login addr="127.0.0.1" port="14300"/>
+		</Local>
+	</ChannelList>
+</document>

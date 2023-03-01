@@ -1,0 +1,111 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<title>修改密码</title>
+	<link rel="stylesheet" type="text/css" href="lib/registration.css">
+<style> 
+.divcss5{text-align:center} 
+</style> 
+<script>
+function s(d){
+	return document.getElementById(d);
+}
+function xhr(link,str,callback){
+		
+	if(!s('cover')){
+		var cover=document.createElement("div");
+		cover.id="cover";
+		cover.style.position="absolute";
+		cover.style.top="0"
+		cover.style.right="0"
+		cover.style.height="40px"
+		cover.style.left="0";
+		document.body.appendChild(cover);
+	}
+	s('cover').innerHTML="<div id='querying' style='position:absolute;top:0;left:0;right:0;height:40px;font-size:32px;color:#cec;background:#c60;text-align:center;'>正在执行...</div>";
+	
+	var xhr;
+	if (window.XMLHttpRequest){//Modern Browsers
+		xhr=new XMLHttpRequest();
+	}
+	else{//可耻的IE6
+		xhr=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xhr.open("POST",link,true);
+	xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");//POST头信息
+	xhr.send(str);
+	xhr.onreadystatechange=function(){
+		if (xhr.readyState==4 && xhr.status==200){//0: 请求未初始化 1: 服务器连接已建立 2: 请求已接收 3: 请求处理中 4: 请求已完成
+			s("cover").removeChild(s('querying'));
+			var res=xhr.responseText;
+			callback(res);
+		}
+		if (xhr.readyState==4 && xhr.status==0){
+			s("cover").removeChild(s('querying'));
+			var res='执行失败';
+			callback(res);
+		}
+	}
+}
+function checkuser(){
+	var filter = /^([a-zA-Z0-9_\.\-])+$/;
+	var username=s('username').value;
+	if (filter.test(username)) return true;
+	s('tip').innerHTML="账号不符合要求";
+	return false;
+}
+function checkpass(){
+	if(s('password').value.length>3&&s('password2').value.length>3&&s('password2').value==s('password3').value) return true;
+	if(s('password2').value!=s('password3').value) s('tip').innerHTML="密码错误";
+	if(s('password').value.length<=3&&s('password2').value.length>=3) s('tip').innerHTML="密码太短";
+	return false;
+}
+function sub(){
+	if(checkuser()&&checkpass()){
+		var link="changepass.php";
+		var str="username="+s('username').value+"&oldpassword="+s('password').value+"&newpassword="+s('password2').value;
+		xhr(link,str,function(res){
+			s('tip').innerHTML=res;
+			
+		})
+	}
+}
+</script>
+</head>
+
+<body>
+	<div id="wrapper">
+		<div id="container">
+			<div id="header">
+			<script src="imgcss/jquery.js" type="text/javascript"></script>
+            <script src="imgcss/jquery_002.js" type="text/javascript"></script>				
+				<img src="images/logo.png">
+			</div>
+			<div id="box" class="wrapper">
+	<div class="box">
+		<div class="logbox">
+			<div id="tip" class="tip"></div>
+			<div class="logmain"><br>
+			    <font color="#090"><div class="divcss5">账号</div></font>
+				<input id="username" type="text" placeholder="账号"></input><br>
+				<label class="labelusername"></label>
+				<font color="#090"><div class="divcss5">原始密码</div></font>
+				<input id="password" type="password" placeholder="原始密码"></input><br>
+				<label class="labelpassword"></label>
+				<font color="#090"><div class="divcss5">新密码</div></font>
+				<input id="password2" type="password" placeholder="新密码"></input><br>
+				<label class="labelpassword"></label>
+				<font color="#090"><div class="divcss5">确认新密码</div></font>
+				<input id="password3" type="password" placeholder="确认新密码"></input><br>
+				<label class="labelpassword"></label>
+				<button id="submit" class="btn" onClick="sub();">确认</button>
+			</div>
+		</div>
+	</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

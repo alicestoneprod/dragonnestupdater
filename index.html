@@ -1,0 +1,144 @@
+﻿<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>《龙之谷》端游官方网站-开启3D无锁定动作冒险时代</title>
+<meta name="keywords" content="龙之谷,DN">
+    <meta name="description" Content="《龙之谷》官方网站。龙之谷是一款3D无锁定革新竞技网游，凭借其独特的操作方式、梦幻的游戏画面、爽快的连招战斗和激烈的PVP体验，成为谷迷们热爱的动作冒险游戏。">
+<meta name="renderer" content="webkit">
+<style type="text/css">
+/*	@ by mengqing
+	@ update: 2015-08-25 18:51
+	*/
+html,body,div,span,object,embed,iframe,h1,h2,h3,h4,h5,h6,p,pre,a,cite,code,del,dfn,em,img,strong,sub,sup,dl,dt,dd,ol,ul,li,fieldset,form,input,label,legend,table,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;}
+html{overflow-y:auto; overflow-x:hidden;}
+table{border-collapse:collapse; border-spacing:0;}
+img{border:none;}
+ul,li,ol {list-style:none;}
+h1,h2,h3,h4,h5,h6{font-weight:normal; font-size:100%;}
+em,cite,dfn{font-style:normal;}
+.clearfix:after {content:"."; display:block; height:0; clear:both; visibility:hidden;}
+.clearfix{*display:inline-block;*zoom:100%;}
+.clear{clear:both; line-height:0; height:0; *display:inline; font-size:0;}
+:focus,a{outline:none; -moz-outline-style:none;}
+a:visited,a:link{color:#606060;text-decoration:none;}
+a:hover,a:active{color:#ff3c00;text-decoration:none;}
+.simsun{font-family:"simsun","\5B8B\4F53";}
+body{font:14px/1.5 "Microsoft YaHei","\5FAE\8F6F\96C5\9ED1",arial,tahoma,sans-serif; color:#606060; background-color:#f1f1f1;}
+.wrap{width:100%; background:url(../images/body.jpg) no-repeat 50% 0; position:relative;}
+.wrapIn{width:1000px; margin:0 auto; background:url(../images/main.jpg) no-repeat; position:relative; z-index:10;}
+.header{height:522px; position:relative;}
+.header .logo{display:block; position:absolute; top:22px; left:35px;}
+.main{width:710px; margin:0 auto; background-color:#fff;}
+.wrap li{float:left;}
+.wrap li a{width:128px; height:83px; display:block; text-indent:-9999em; background:url(../images/nav.png) no-repeat;}
+.wrap li a.reg{background-position:0 0;}
+.wrap li a.down{background-position:-128px 0;}
+.wrap li a.guide{background-position:-256px 0;}
+.wrap li a.act{background-position:-384px 0;}
+.wrap li a.reg:hover{background-position:0 -83px;}
+.wrap li a.down:hover{background-position:-128px -83px;}
+.wrap li a.guide:hover{background-position:-256px -83px;}
+.wrap li a.act:hover{background-position:-384px -83px;}
+.wrap li a.go{width:198px; background:url(../images/btngo.png) no-repeat; position:relative;}
+.wrap li a.go:hover{background-position:0 -83px;}
+.wrap li a.go i{width:18px; height:28px; display:block; position:absolute; top:-5px; right:-8px; background:url(../images/icon_go.png) no-repeat;}
+.video{width:690px; height:414px; padding-bottom:10px; margin:20px auto; margin-bottom:80px; position:relative;}
+#btn-play,#btn-closevideo{display:block; cursor:pointer; position:absolute;}
+#btn-closevideo{width:30px; height:30px; background:url(../images/btnVideoClose.png) no-repeat;  top:12px; right:12px; display:none;}
+#btn-play{width:84px; height:84px; background:url(../images/videoIco.png) no-repeat; top:162px; left:300px;}
+#btn-play:hover{opacity:.7; filter:alpha(opacity=70);}
+#video-con{width:690px; height:423px; overflow:hidden; background:url(../images/loading.gif) no-repeat 50% 50%;}
+</style>
+</head>
+<body>
+<!-- <script type="text/javascript" src="../js/g_plus_loader.js"></script>
+<script type="text/javascript">
+    NavLoader.init(89, '龙之谷', 'white', 1002);
+</script> -->
+<div class="wrap">
+	<div class="wrapIn">
+		<div class="header">
+			<a href="../index.html" class="logo"><img src="../images/logo.png" width="156" height="86"></a>
+			<p style="font-size: 12px; color: ##0b8e89; position: absolute; right: 147px;  bottom: 7px;">适龄提示：游戏适合12岁以上用户</p>
+		</div>
+		<div class="main">
+			<ul class="clearfix nav">
+				<li><a href="../login.html" class="reg" target="_blank">账号管理</a></li>
+				<li><a href="http://www.baidu.com/" class="down" target="_blank">游戏下载</a></li>
+				<li><a href="http://act2.dn.sdo.com/project/guide2.0/" class="guide" target="_blank">新手指南</a></li>
+				<li><a href="../changepassxy.html" class="act" target="_blank">修改密码</a></li>
+				<li><a href="../zhuce.html" class="go" target="_blank">账号注册<i></i></a></li>
+			</ul>
+			<div class="video">
+            	<!-- <a id="btn-closevideo" title="关闭"></a> -->
+                <a id="btn-play" title="点击播放视频"></a>
+            	<div id="video-con"><img src="http://fu5.sdo.com/10036/201808/15347527032082.jpg" width="690" height="414" alt=""></div>
+            </div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="../js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	// video
+	var vcon = $('#video-con').html();
+	$('#btn-play').click(function(){
+		var _flv="../images/fsdd42.mp4"
+		var _width='690';
+		var _height='359';
+		var video_html='<iframe  width="100%" height="512px" style="margin-top:-50px;" src="../images/fsdd42.mp4" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>'
+		/*
+		var video_html='<object id="video_player" type="application/x-shockwave-flash" data="'+_flv+'" width="'+_width+'" height="'+_height+'">';
+		if(isThisOs('ie6,ie7,ie8')){
+		video_html +='<param name="movie" value="'+_flv+'">';
+		}
+		video_html +='<param name="quality" value="high">';
+		video_html +='<param name="allowScriptAccess" value="always">';
+		video_html +='<param name="allowFullScreen" value="true">';
+		video_html +='<param name="wMode" value="opaque">';
+		video_html +='<param name="swLiveConnect" value="true">';
+		video_html +='</object>';
+		*/
+		$('#video-con').html(video_html);
+		$(this).hide();$('#btn-closevideo').show();
+		});
+	$('#btn-closevideo').click(function(){
+		$('#video-con').html(vcon);
+		$('#btn-play').show();
+		$('#btn-closevideo').hide();
+	});
+//get brower
+function getOs(){
+	var OsObject = "";
+	if( navigator.userAgent.indexOf("MSIE 6.0")>0) {
+		OsObject = "ie6";
+	}else if( navigator.userAgent.indexOf("MSIE 7.0")>0) {
+		OsObject = "ie7";
+	}else if( navigator.userAgent.indexOf("MSIE 8.0")>0) {
+		OsObject = "ie8";
+	}else if(isFirefox=navigator.userAgent.indexOf("Firefox")>0){
+		OsObject = "Firefox";
+	}else if(isChrome=navigator.userAgent.indexOf("Chrome")>0){
+		OsObject = "Chrome";
+	}
+	else if(isSafari=navigator.userAgent.indexOf("Safari")>0) {
+		OsObject = "Safari";
+	}else if(isCamino=navigator.userAgent.indexOf("Camino")>0){
+		OsObject = "Camino";
+	}else if(isMozilla=navigator.userAgent.indexOf("Gecko/")>0){
+		OsObject = "Gecko";
+	}
+	return OsObject;
+}
+// brower ver
+function isThisOs(os){
+	var thisOs = getOs();
+	var hasThisOs = os.indexOf(thisOs);
+	return hasThisOs != -1;
+}
+
+});
+</script>
+</body>
+</html>

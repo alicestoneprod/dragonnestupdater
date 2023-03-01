@@ -1,0 +1,258 @@
+﻿<!doctype html>
+<head>
+<meta charset="utf-8">
+<title>账户管理</title>
+<style>
+*{position:relative;margin:0;padding:0;text-decoration:none;font-family:'微软雅黑','verdana';}
+html,body{width:100%;height:100%;overflow:hidden;background:#DBE3E6;}
+.box{position:absolute;left:50%;margin-left:-317px;width:635px;height:400px;}
+input,button{float:left;margin-top:20px;margin-left:16px;width:100px;height:28px;font-size:15px;line-height:24px;}
+.submit{border:1px solid #ccc;border-radius:3px;cursor:pointer;text-align:center;color:#090;}
+.submit:hover{border:1px solid #49c;}
+.logbox{position:absolute;top:15px;left:15px;border:1px solid #f5f5f5;width:600px;height:450px;}
+.logtitle{width:600px;height:40px;background:#f5f5f5;text-align:center;font-size:20px;line-height:40px;color:#FF0000;}
+.logmain{float:left;margin:40px 0 0 30px;border:1px solid #f5f5f5;width:250px;height:330px;}
+.job{float:left;margin:100px 0 0 10px;border:1px solid #f5f5f5;width:230px;height:140px;}
+.k{float:left;margin:1px 0 0 55px;border:1px;width:120px;height:30px;}
+.maintitle{text-align:center;margin:18px auto;width:180px;color:#FF0000;}
+#characters{position:absolute;display:block;top:45px;left:200px;width:180px;height:30px;font-size:18px;}
+#newname{position:absolute;margin:20px 29px;padding-left:10px;width:180px;}
+#changenamebutton{position:absolute;top:110px;left:55px;}
+#changejobbutton{position:absolute;top:80px;left:45px;}
+.login{position:absolute;bottom:-65px;right:50px;border:1px solid #090;width:100px;height:30px;}
+.login a{display:block;width:100px;height:30px;line-height:28px;text-align:center;color:#090;font-weight:bold;}
+.addrole{position:absolute;bottom:0;right:270px;border:1px solid #090;width:100px;height:30px;}
+.addrole a{display:block;width:100px;height:30px;line-height:28px;text-align:center;color:#090;font-weight:bold;}
+</style>
+</script>
+<script>
+function s(d){
+	return document.getElementById(d);
+}
+function xhr(link,str,callback){
+		
+	if(!s('cover')){
+		var cover=document.createElement("div");
+		cover.id="cover";
+		cover.style.position="absolute";
+		cover.style.top="0"
+		cover.style.right="0"
+		cover.style.height="40px"
+		cover.style.left="0";
+		document.body.appendChild(cover);
+	}
+	s('cover').innerHTML="<div id='querying' style='position:absolute;top:0;left:0;right:0;height:40px;font-size:32px;color:#cec;background:#c60;text-align:center;'>正在执行...</div>";
+	
+	var xhr;
+	if (window.XMLHttpRequest){//Modern Browsers
+		xhr=new XMLHttpRequest();
+	}
+	else{//可耻的IE6
+		xhr=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xhr.open("POST",link,true);
+	xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");//POST头信息
+	xhr.send(str);
+	xhr.onreadystatechange=function(){
+		if (xhr.readyState==4 && xhr.status==200){//0: 请求未初始化 1: 服务器连接已建立 2: 请求已接收 3: 请求处理中 4: 请求已完成
+			s("cover").innerHTML="";
+			var res=xhr.responseText;
+			callback(res);
+		}
+		if (xhr.readyState==4 && xhr.status==0){
+			s("cover").removeChild(s('querying'));
+			var res="<div style='color:#f00;font-family:黑体;'>执行失败</div>";
+			callback(res);
+		}
+	}
+}
+function check(){
+	if(s('characters').value>0)return true;
+	return false;
+}
+function checkname(){
+	if(s('newname').value.length>0)return true;
+	return false;
+}
+function checkjob(){
+	if(s('job').value.length>0)return true;
+	return false;
+}
+function cls(l){
+	if(check()){
+		var loc={
+			2:'背包',
+			3:'仓库',
+			5:'点券物品',
+			9:'坐骑',
+			4:'任务品',
+			10:'宠物',
+		}
+		var link="clear.php";
+		var str="cid="+s('characters').value+"&clear="+l;
+		xhr(link,str,function(res){
+			if(/cleaned/i.test(res)){
+				s('logtitle').innerHTML=loc[l]+'已空';
+			}else{
+				s('logtitle').innerHTML=res;
+			}
+		});
+	}
+}
+function clsexc(){
+	var link="clsexc.php";
+	var str="cid="+s('characters').value;
+	xhr(link,str,function(res){
+		if(/cleaned/i.test(res)){
+			s('logtitle').innerHTML='卡号自救已完成';
+		}else{
+			s('logtitle').innerHTML=res;
+		}
+	});
+}
+function changejob(){
+	if(check()&&checkjob()){
+		var link="changejob.php";
+		var str="cid="+s('characters').value+"&job="+s('job').value;
+		xhr(link,str,function(res){
+			s('logtitle').innerHTML=res;
+		});
+	}
+}
+function clsexw(){
+	var link="clsexw.php";
+	var str="cid="+s('characters').value;
+	xhr(link,str,function(res){
+		if(/cleaned/i.test(res)){
+			s('logtitle').innerHTML='纹章已经下到背包请小退查看';
+		}else{
+			s('logtitle').innerHTML=res;
+		}
+	});
+}
+function clsejs(){
+	var link="clsejs.php";
+	var str="cid="+s('characters').value;
+	xhr(link,str,function(res){
+		if(/cleaned/i.test(res)){
+			s('logtitle').innerHTML='所有装备已经解锁请小退查看';
+		}else{
+			s('logtitle').innerHTML=res;
+		}
+	});
+}
+function clsegb(){
+	var link="clsegb.php";
+	var str="cid="+s('characters').value;
+	xhr(link,str,function(res){
+		if(/cleaned/i.test(res)){
+			s('logtitle').innerHTML='除高保外其他点卷物品已清理请小退查看';
+		}else{
+			s('logtitle').innerHTML=res;
+		}
+	});
+}
+function clsexwz(){
+	var link="clsexwz.php";
+	var str="cid="+s('characters').value;
+	xhr(link,str,function(res){
+		if(/cleaned/i.test(res)){
+			s('logtitle').innerHTML='纹章格已经删除小退查看';
+		}else{
+			s('logtitle').innerHTML=res;
+		}
+	});
+}
+function clseskill(){
+	var link="clseskill.php";
+	var str="cid="+s('characters').value;
+	xhr(link,str,function(res){
+		if(/cleaned/i.test(res)){
+			s('logtitle').innerHTML='重置技能完成小退查看';
+		}else{
+			s('logtitle').innerHTML=res;
+		}
+	});
+}
+function rename(){
+	if(check()&&checkname()){
+		var link="rename.php";
+		var str="cid="+s('characters').value+"&newname="+s('newname').value;
+		xhr(link,str,function(res){
+			s('logtitle').innerHTML=res;
+		});
+	}
+}
+window.onload=function(){
+	var link="getrole.php";
+	xhr(link,"",function(res){
+		if (/unlog/i.test(res))window.location.href="login.html";
+		if (/执行失败/i.test(res)){
+			s('logtitle').innerHTML=res;
+		}else{
+			var json=eval(res);
+			var c=s('characters');
+			for(i in json){
+				var o=document.createElement('option');
+				o.value=json[i]['CharacterID'];
+				o.innerHTML=json[i]['CharacterName'];
+				c.appendChild(o);
+			}
+		}
+	})
+}
+</script>
+</head>
+<body>
+<!-- <body oncontextmenu=self.event.returnValue=false onselectstart="return false"> -->
+	<div class="box">
+		<div class="logbox">
+			<div id="logtitle" class="logtitle">角色修改（角色无法选择-极速模式-后即可选择角色）</div>
+			<select id="characters">
+				<option value="0">选择角色</option>
+			</select>
+			<div class="logmain">
+				<div class="maintitle">一键清理--(无法恢复)--请务必--谨慎选择</div>
+				<button class="submit" onclick="cls(2);">清空背包</button>
+				<button class="submit" onclick="cls(3);">清空仓库</button>
+				<button class="submit" onclick="cls(5);">清空点券</button>
+				<button class="submit" onclick="cls(9);">清空坐骑</button>
+				<button class="submit" onclick="clsexc();">卡号自救</button>
+				<!--button class="submit" onclick="clsexw();">一键下纹章</button-->
+				<button class="submit" onclick="clsexwz();">删1格纹章栏</button>
+				<button class="submit" onclick="cls(10);">清空宠物</button>
+				<button class="submit" onclick="clsejs();">解锁装备</button>
+				<button class="submit" onclick="clseskill();">重置技能</button>
+				<!--button class="submit" onclick="clsegb();">除高保蛋</button-->
+			</div>
+			<div class="logmain">
+				<div class="maintitle">快速改名(10个字之内)</div>
+				<input id="newname" type="text" placeholder="要修改的角色名"></input>
+				<button id="changenamebutton" class="submit" onclick="rename();">确定</button><br>
+			<div class="job">
+					<div class="maintitle">修改角色职业</div>
+				<select id="job" name="job" class="k">
+				<option value="纳">请选择转职职业</option>
+				<option value="1">战士</option>
+				<option value="2">弓箭手</option>
+				<option value="3">魔法师</option>
+				<option value="4">牧师</option>
+				<option value="5">学者</option>
+				<option value="6">舞娘</option>
+				<option value="7">刺客</option>
+				<option value="8">女枪</option>
+				<option value="9">兽娘</option>
+				</select>
+				<button id="changejobbutton" class="submit" onclick="changejob();">确定</button>
+			</div>
+			</div>
+		</div>
+		<div id="loginleft" class="loginborder"><div class="inloginborder"></div></div>
+		<div class="login">
+			<a href="login.html">更换账号</a>
+		</div>
+		<div id="loginright" class="loginborder"><div class="inloginborder"></div></div>
+
+	</div>
+</body>
+</html>
